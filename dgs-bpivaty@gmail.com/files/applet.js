@@ -12,6 +12,9 @@ const Notify = imports.gi.Notify;
 const Secret = imports.gi.Secret;
 const Settings = imports.ui.settings;
 const Main   = imports.ui.main;
+const PLAYER_1 = 29;
+const PLAYER_2 = 34;
+const MOVE_UID = 25;
 
 
 var applet_path;
@@ -237,9 +240,9 @@ MyApplet.prototype = {
         this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
     },
 
-    _add_refresh_menu_item() {
+    _add_update_menu_item() {
         this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
-        let menu_item = new PopupMenu.PopupMenuItem('Refresh list');
+        let menu_item = new PopupMenu.PopupMenuItem('Update list');
         menu_item.connect("activate", Lang.bind(this, this._recreate_all_menu));
         this.menu.addMenuItem(menu_item);
     
@@ -315,10 +318,10 @@ MyApplet.prototype = {
         let maxGames = jsonData.list_totals;
 
         for (let i = 0; i < maxGames; i++) {
-            let move_uid = jsonData.list_result[i][25];
+            let move_uid = jsonData.list_result[i][MOVE_UID];
 
-            const p1 = this.parseUserNameFromId(jsonData.list_result[i][29]);
-            const p2 = this.parseUserNameFromId(jsonData.list_result[i][34]);
+            const p1 = this.parseUserNameFromId(jsonData.list_result[i][PLAYER_1]);
+            const p2 = this.parseUserNameFromId(jsonData.list_result[i][PLAYER_2]);
 
             const players = p1 + ' vs ' + p2;
 
@@ -340,7 +343,7 @@ MyApplet.prototype = {
             if (this.loggedIn) {
                 this._set_menu_title();
                 this.parseGameList(JSON.parse(this.get_game_list()));
-                this._add_refresh_menu_item();
+                this._add_update_menu_item();
 
                 if (was_opened) {
                     this.menu.toggle();
@@ -360,7 +363,7 @@ MyApplet.prototype = {
 
         try {
             urlcatch = Gio.file_new_for_uri(this.baseUrl + req);
-            loaded=urlcatch.load_contents(null);
+            loaded = urlcatch.load_contents(null);
             return loaded[1];
 
         } catch (err) {
@@ -372,7 +375,7 @@ MyApplet.prototype = {
         this.loggedIn = true;
         this._set_menu_title();
         this.parseGameList(JSON.parse(this.get_game_list()));
-        this._add_refresh_menu_item();
+        this._add_update_menu_item();
     },
 
     on_applet_removed_from_panel: function(){
