@@ -175,15 +175,6 @@ MyApplet.prototype = {
         }
     },
 
-//     _loggout: function () {
-//         let message = Soup.Message.new(
-//             "GET",
-//             this.baseUrl + "login.php?quick_mode=1&logout=1"
-//         );
-
-//         session.send_message(message);
-//     },
-
     _update_user_games: function (dgs_uid, passwd, callback) {
         // this._loggout();
         this._dgs_login(dgs_uid, passwd, callback);
