@@ -49,13 +49,6 @@ def dgs_login(user, password):
 
             result = session.get(url)
 
-            print(json.dumps(
-                {"status_code": "Ok",
-                 "id": user_info["id"],
-                  "handle": user_info["handle"],
-                   "list_result": game_list
-                }))
-
             return json.dumps(
                 {"status_code": "Ok",
                  "id": user_info["id"],
