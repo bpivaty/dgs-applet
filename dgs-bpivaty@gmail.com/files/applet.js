@@ -1,8 +1,4 @@
 const Lang = imports.lang;
-const APPLET_PATH =
-    imports.ui.appletManager.appletMeta["dgs-bpivaty@gmail.com"].path;
-imports.searchPath.push(APPLET_PATH);
-
 const Applet = imports.ui.applet;
 const GLib = imports.gi.GLib;
 const Gettext = imports.gettext;
